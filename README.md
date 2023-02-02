@@ -1,6 +1,6 @@
 # Open-Source Web3-React-Redux-Tailwind-Template
 
-This is an Open Source project bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+This is an Open Source project bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
 [TailwindCSS](https://tailwindcss.com/docs) is also installed for quick styling and [Rainbow Toolkit](https://www.rainbowkit.com/) which uses wagmi under the hood is also pre-installed for connections.
 The redux folders are fully empty to allow full customization.
 

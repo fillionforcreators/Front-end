@@ -19,7 +19,7 @@ function classNames(...classes) {
 export default function Navbar() {
   const [colorScheme, setTheme] = DarkMode();
   return (
-    <Popover className="relative bg-inherit">
+    <Popover className="relative bg-lg">
       <div className="w-full mx-auto px-4 sm:px-6">
         <div className="flex justify-between lg:justify-evenly items-center pt-6 pb-4  md:space-x-10 ">
           {/* Logo */}
@@ -35,10 +35,7 @@ export default function Navbar() {
                   alt=""
                 />
                 <span className="text-indigo-600">
-                  File
-                  <span className="text-gray-900 dark:text-gray-200">
-                    chain
-                  </span>
+                  Fillion
                 </span>
               </div>
             </Link>
