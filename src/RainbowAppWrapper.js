@@ -12,7 +12,6 @@ import { publicProvider } from "wagmi/providers/public";
 import { filecoin } from "./constants/fil";
 
 const { chains, provider, webSocketProvider } = configureChains(
-  /**@notice you can add or remove more chains as you see fit*/
     [chain.polygonMumbai, filecoin],
   /**@notice This is Alchemy's default API key.
       You can get your own at https://dashboard.alchemyapi.io */
@@ -40,7 +39,7 @@ const RainbowAppWrapper = () => {
       <RainbowKitProvider
         chains={chains}
         theme={lightTheme({
-          accentColor: "#7b3fe4",
+          accentColor: "#4F46E5",
           accentColorForeground: "white",
           borderRadius: "medium",
           fontStack: "system",

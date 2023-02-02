@@ -2,14 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .bg-ld {
     @apply bg-slate-100 dark:bg-[#202020];
 }
 
 .bg-ld-nft {
     @apply bg-slate-100 dark:bg-slate-800;
-
 }
 
 .bg-nav {
@@ -26,4 +24,40 @@
 
 .text-small {
     @apply text-slate-600 dark:text-slate-100;
+}
+
+.bttn {
+    @apply w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md;
+}
+
+.bttn-2 {
+    @apply w-fit flex items-center justify-center px-6 py-1.5 border border-transparent text-base font-medium rounded-md;
+}
+
+.bttn-3 {
+    @apply w-full lg:w-fit flex items-center justify-center px-4 py-2 lg:px-2 border border-transparent text-base font-medium rounded-md;
+}
+
+.bttn-4 {
+    @apply w-fit flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md;
+}
+
+.bttn-5 {
+    @apply flex items-center justify-center px-2 py-2 border border-transparent text-xs sm:text-sm font-medium rounded-md;
+}
+
+.bttn-primary {
+    @apply text-white bg-indigo-600 hover:bg-indigo-700 md:text-base;
+}
+
+.bttn-primary-2 {
+    @apply text-white bg-indigo-600 hover:bg-indigo-700;
+}
+
+.bttn-secondary {
+    @apply text-indigo-700 bg-indigo-300 hover:bg-indigo-200 md:text-base;
+}
+
+.bttn-secondary-2 {
+    @apply text-indigo-700 bg-indigo-300 hover:bg-indigo-200;
 }
