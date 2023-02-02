@@ -1,46 +1,55 @@
-import React from 'react';
-import App from './App';
-import '@rainbow-me/rainbowkit/styles.css';
-import { RainbowKitProvider, getDefaultWallets, darkTheme } from '@rainbow-me/rainbowkit';
-import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
-import { publicProvider } from 'wagmi/providers/public';
+import React from "react";
+import App from "./App";
+import "@rainbow-me/rainbowkit/styles.css";
+import {
+  RainbowKitProvider,
+  getDefaultWallets,
+  lightTheme,
+} from "@rainbow-me/rainbowkit";
+import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
+import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
+import { filecoin } from "./constants/fil";
 
 const { chains, provider, webSocketProvider } = configureChains(
-    /**@notice you can add or remove more chains as you see fit*/
-    [chain.mainnet, chain.polygon, chain.polygonMumbai, chain.goerli],
-    /**@notice This is Alchemy's default API key.
+  /**@notice you can add or remove more chains as you see fit*/
+    [chain.polygonMumbai, filecoin],
+  /**@notice This is Alchemy's default API key.
       You can get your own at https://dashboard.alchemyapi.io */
-    [alchemyProvider({ apiKey: '_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC', }), publicProvider()]
+  [
+    alchemyProvider({ apiKey: "_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC" }),
+    publicProvider(),
+  ]
 );
 
 const { connectors } = getDefaultWallets({
-    appName: 'YOUR_APP_NAME',
-    chains,
+  appName: "Fillion",
+  chains,
 });
 
 const wagmiClient = createClient({
-    autoConnect: true,
-    connectors,
-    provider,
-    webSocketProvider,
+  autoConnect: true,
+  connectors,
+  provider,
+  webSocketProvider,
 });
 
 const RainbowAppWrapper = () => {
-
-    return (
-        <WagmiConfig client={wagmiClient}>
-            <RainbowKitProvider chains={chains} theme={darkTheme({
-                accentColor: 'black',
-                accentColorForeground: 'white',
-                borderRadius: 'medium',
-                fontStack: 'system',
-                overlayBlur: 'small',
-            })}>
-                <App />
-            </RainbowKitProvider>
-        </WagmiConfig>
-    );
+  return (
+    <WagmiConfig client={wagmiClient}>
+      <RainbowKitProvider
+        chains={chains}
+        theme={lightTheme({
+          accentColor: "#7b3fe4",
+          accentColorForeground: "white",
+          borderRadius: "medium",
+          fontStack: "system",
+        })}
+      >
+        <App />
+      </RainbowKitProvider>
+    </WagmiConfig>
+  );
 };
 
 export default RainbowAppWrapper;

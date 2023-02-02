@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.bg-ld {
+    @apply bg-slate-100 dark:bg-[#202020];
+}
+
+.bg-ld-nft {
+    @apply bg-slate-100 dark:bg-slate-800;
+
+}
+
+.bg-nav {
+    @apply bg-slate-100 dark:bg-slate-900;
+}
+
+.text-ld {
+    @apply text-slate-900 dark:text-slate-100;
+}
+
+.text-ind {
+    @apply text-indigo-700 dark:text-indigo-500;
+}
+
+.text-small {
+    @apply text-slate-600 dark:text-slate-100;
+}

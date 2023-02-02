@@ -1,1 +1,0 @@
-export { default as TWLogoBlack } from "./tw-logo-black.svg"
