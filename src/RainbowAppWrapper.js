@@ -12,7 +12,7 @@ import { publicProvider } from "wagmi/providers/public";
 import { filecoin } from "./constants/fil";
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [chain.polygonMumbai, filecoin],
+  [filecoin, chain.polygonMumbai, chain.mainnet],
   /**@notice This is Alchemy's default API key.
       You can get your own at https://dashboard.alchemyapi.io */
   [
