@@ -33,7 +33,7 @@ const Home = () => {
               </Link>
             </div>
             <div className="mt-3 sm:mt-0 sm:ml-6">
-              <Link className="bttn bttn-secondary" to="/collection/create">
+              <Link className="bttn bttn-secondary" to="/signup">
                 Sign up as an Artist
               </Link>
             </div>
