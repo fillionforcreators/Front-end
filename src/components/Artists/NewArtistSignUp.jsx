@@ -3,25 +3,9 @@ import { Link } from "react-router-dom";
 import { FiUpload } from "react-icons/fi";
 import toast from "react-hot-toast";
 import LoadingModal from "../Modals/LoadingModal";
-// import { useProvider, useSigner, useContract } from "wagmi";
-// import { ARTIST_CONTRACT_ADDRESS, ARTIST_ABI } from "../../constants/index";
-
-import { Web3Storage } from "web3.storage/dist/bundle.esm.min.js";
-
-const apiToken = process.env.REACT_APP_WEB3STORAGE_API_TOKEN;
-
-const client = new Web3Storage({ token: apiToken });
+import { getJSONFromCID, pushImgToStorage, putJSONandGetHash } from "../../utils/storage";
 
 function NewArtist() {
-  // const provider = useProvider();
-  // const signer = useSigner();
-  // Set up a contract instance
-  // const ArtistContract = useContract({
-  //   addressOrName: ARTIST_CONTRACT_ADDRESS,
-  //   contractInterface: ARTIST_ABI,
-  //   signerOrProvider: signer.data || provider,
-  // });
-
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [name, setName] = useState("");
@@ -47,29 +31,24 @@ function NewArtist() {
     if (image && name.length >= 1 && bio.length >= 5) {
       setLoading(true);
       console.log("uploading image");
-      const imgHash = await client.put([image], { wrapWithDirectory: false });
+      const imgHash = await pushImgToStorage(image);
       console.log("Image hash: ", imgHash);
-      // const imgHash = imgHash;
+
       //create artist object
       const artist = {
         name,
         bio,
         imgHash,
       };
-
-      //converting object to a blob
-      const blob = new Blob([JSON.stringify(artist)], {
-        type: "application/json",
-      });
-      //and then to a file
-      const file = [new File([blob], "artist.json")];
-      //uploading file
-      const artistHash = await client.put(file);
+      console.log("Artist object: ", artist);
+      //put artist object in storage
+      const artistHash = await putJSONandGetHash(artist);
 
       console.log("Artist hash: ", artistHash);
-      //upload artist to FileChain
-      // const txResponse = await ArtistContract.newArtistSignup(artistHash);
-      // await txResponse.wait();
+      const artistjson = await getJSONFromCID(artistHash);
+      console.log(artistjson)
+
+      //push hash to contract
       setName("");
       setBio("");
       setImage(null);

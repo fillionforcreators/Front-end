@@ -80,7 +80,7 @@ export default function Navbar() {
                     <Popover.Panel className="absolute z-20 left-1/2 transform -translate-x-1/2 mt-3 px-2 w-full max-w-md sm:px-0">
                       <div className="rounded-sm shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                         <div className="relative grid gap-6 bg-white px-2 py-6 sm:gap-8">
-                          <Link to="/newArtist">
+                          <Link to="/signup">
                             <div className="text-[12px] lg:text-base text-gray-900">
                               <Popover.Button>Sign up</Popover.Button>
                             </div>
@@ -100,7 +100,7 @@ export default function Navbar() {
               )}
             </Popover>
             <NavLink exact="true" to="/profile">
-              Your Profile
+              LaunchPad
             </NavLink>
             <div
               onClick={() => setTheme(colorScheme)}
@@ -233,7 +233,7 @@ export default function Navbar() {
                     className="h-6 w-6 text-indigo-600"
                     aria-hidden="true"
                   />
-                  Your Profile
+                  LaunchPad
                 </NavLink>
                 <div
                   onClick={() => setTheme(colorScheme)}
