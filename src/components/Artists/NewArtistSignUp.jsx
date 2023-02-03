@@ -3,9 +3,20 @@ import { Link } from "react-router-dom";
 import { FiUpload } from "react-icons/fi";
 import toast from "react-hot-toast";
 import LoadingModal from "../Modals/LoadingModal";
-import { getJSONFromCID, pushImgToStorage, putJSONandGetHash } from "../../utils/storage";
+import { pushImgToStorage, putJSONandGetHash } from "../../utils/storage";
+import { useProvider, useSigner, useContract } from "wagmi";
+import { ARTIST_CONTRACT_ADDRESS, ARTIST_ABI } from "../../constants/index";
 
 function NewArtist() {
+   const provider = useProvider();
+   const signer = useSigner();
+   // Set up a contract instance
+   const ArtistContract = useContract({
+     addressOrName: ARTIST_CONTRACT_ADDRESS,
+     contractInterface: ARTIST_ABI,
+     signerOrProvider: signer.data || provider,
+   });
+
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [name, setName] = useState("");
@@ -40,15 +51,12 @@ function NewArtist() {
         bio,
         imgHash,
       };
-      console.log("Artist object: ", artist);
-      //put artist object in storage
       const artistHash = await putJSONandGetHash(artist);
-
       console.log("Artist hash: ", artistHash);
-      const artistjson = await getJSONFromCID(artistHash);
-      console.log(artistjson)
-
       //push hash to contract
+       const txResponse = await ArtistContract.newArtistSignup(artistHash);
+       await txResponse.wait();
+
       setName("");
       setBio("");
       setImage(null);

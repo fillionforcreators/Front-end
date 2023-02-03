@@ -99,7 +99,7 @@ export default function Navbar() {
                 </>
               )}
             </Popover>
-            <NavLink exact="true" to="/profile">
+            <NavLink exact="true" to="/launchpad">
               LaunchPad
             </NavLink>
             <div
@@ -226,7 +226,7 @@ export default function Navbar() {
                 </NavLink>
                 <NavLink
                   exact="true"
-                  to="/profile"
+                  to="/launchpad"
                   className="hover:bg-gray-50 dark:hover:bg-gray-800 p-3 w-full flex gap-2 items-center rounded-md"
                 >
                   <ViewGridIcon

@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Home, Footer, SignUp } from "./components";
+import { Navbar, Home, Footer, SignUp, LaunchPad } from "./components";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -14,6 +14,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/signup" element={<SignUp />} />
+          <Route exact path="/launchpad" element={<LaunchPad />} />
         </Routes>
         <Footer />
       </div>

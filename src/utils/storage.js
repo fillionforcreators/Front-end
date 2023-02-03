@@ -18,7 +18,12 @@ export const getJSONFromFileinCID = async (_cid) => {
 
 export const getJSONFromCID = async (_cid) => {
   const json = await client.get(_cid);
-  return json;
+  const filesArr = await json.files(); // Web3File[]
+  let abc = filesArr[0].cid;
+  const data = await fetch(`https://${abc}.ipfs.w3s.link`).then((dets) =>
+    dets.json()
+  );
+  return data;
 };
 
 export const putFileandGetHash = async (file) => {
