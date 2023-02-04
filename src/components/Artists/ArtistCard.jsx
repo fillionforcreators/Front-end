@@ -35,7 +35,7 @@ function ArtistCard({ artist }) {
       setImageUrl(res.imgHash);
     };
 
-    fetchData();
+    fetchData(); 
   }, [artistDetails]);
 
   return (
