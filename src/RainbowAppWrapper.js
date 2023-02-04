@@ -9,6 +9,7 @@ import {
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { filecoin } from "./constants/fil";
 
 const { chains, provider, webSocketProvider } = configureChains(
@@ -18,6 +19,12 @@ const { chains, provider, webSocketProvider } = configureChains(
   [
     alchemyProvider({ apiKey: "_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC" }),
     publicProvider(),
+    jsonRpcProvider({
+      rpc: (chain) => {
+        if (chain.id !== filecoin.id) return null
+          return filecoin.rpcUrls.default.http;
+      }
+    })
   ]
 );
 

@@ -11,7 +11,10 @@ export const filecoin = {
   },
   rpcUrls: {
     default: {
-      http: ["https://api.hyperspace.node.glif.io/rpc/v0"],
+      http: [
+        "https://filecoin-hyperspace.chainstacklabs.com/rpc/v1",
+        // "https://api.hyperspace.node.glif.io/rpc/v1",
+      ],
     },
   },
   blockExplorers: {

@@ -1,4 +1,4 @@
-export const ARTIST_CONTRACT_ADDRESS = '';
+export const ARTIST_CONTRACT_ADDRESS = "0x419b995edc4809fa6Ca60a08a7C2659Ac7009A2d";
 
 export const ARTIST_ABI = [
   {
