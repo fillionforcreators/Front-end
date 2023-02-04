@@ -22,26 +22,20 @@ function ArtistsAndCreators() {
   useEffect(() => {
     const OnPageLoad = async () => {
       if (isConnected) {
-        try {
-          setFetchingArtists(true);
-          const allArtists = await ArtistContract.getAllArtists();
-          setArtists(allArtists);
-          setFetchingArtists(false);
-        } catch (error) {
-          console.log(error)
-          setArtists([]);
-          toast.error("An error has occurred, please try again");
-          setFetchingArtists(false);
-        }
+        setFetchingArtists(true);
+        const allArtists = await ArtistContract.getAllArtists();
+        console.log(allArtists);
+        setArtists(allArtists);
+        setFetchingArtists(false);
       } else {
         toast.error("Please connect your wallet");
       }
     };
     OnPageLoad();
     return () => {
-      setArtists([])
+      setArtists([]);
       setFetchingArtists(false);
-    }
+    };
   }, [isConnected, ArtistContract]);
 
   if (!isConnected)

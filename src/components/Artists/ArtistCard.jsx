@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getJSONFromCID } from '../../utils/storage'
 
 function ArtistCard({ artist }) {
   const [name, setName] = useState("");
@@ -28,9 +29,7 @@ function ArtistCard({ artist }) {
   useEffect(() => {
     const fetchData = async () => {
       //fetch artist's name, bio, and profile picture from IPFS using artistDetails as the hash
-      let res = await fetch(
-        `https://ipfs.io/ipfs/${artistDetails}/artist.json`
-      ).then((res) => res.json());
+      let res = await getJSONFromCID(artistDetails);
       setName(res.name);
       setBio(res.bio);
       setImageUrl(res.imgHash);
