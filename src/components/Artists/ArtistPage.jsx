@@ -13,7 +13,7 @@ function ArtistPage() {
   const { isConnected } = useAccount();
   const { artistAddress, name, imageUrl, bio } = state.object;
   const [artistContracts, setArtistContracts] = useState([]);
-
+console.log('location state', state.object)
   //Factory Instance
   const provider = useProvider();
   const signer = useSigner();

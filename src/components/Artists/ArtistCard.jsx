@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getJSONFromCID } from '../../utils/storage'
+import { getJSONFromCID } from "../../utils/storage";
 
 function ArtistCard({ artist }) {
   const [name, setName] = useState(null);
@@ -17,39 +17,39 @@ function ArtistCard({ artist }) {
   dateJoined = new Date(dateJoined * 1000);
   dateJoined = dateJoined.toLocaleDateString();
 
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-      //fetch artist's name, bio, and profile picture from IPFS using artistDetails as the hash
+  const fetchData = async () => {
+    //fetch artist's name, bio, and profile picture from IPFS using artistDetails as the hash
+    try {
       let res = await getJSONFromCID(artistDetails);
       console.log(res);
       setName(res?.name);
       setBio(res?.bio);
       setImageUrl(res?.imgHash);
-    };
-
-    fetchData(); 
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    fetchData();
   }, []);
 
-    const object = {
-      artistAddress,
-      dateJoined,
-      idInt,
-      name,
-      imageUrl,
-      bio,
-    };
+  const object = {
+    artistAddress,
+    dateJoined,
+    idInt,
+    name,
+    imageUrl,
+    bio,
+  };
 
   return (
     <div className=" dark:bg-inherit flex flex-col gap-2 relative w-full h-[300px] sm:h-[380px] rounded-lg overflow-hidden trans shadow-md cursor-pointer border-2 border-transparent dark:border-slate-700">
       <div className="w-full h-[55%] sm:h-[65%]">
         <img
           src={
-            imageUrl ?
-              `https://ipfs.io/ipfs/${imageUrl}`
-              :
-            "https://ipfs.io/ipfs/bafkreihfweuclvhaozl7q6zsjjyrkh262vlbzqyd5m3lijrnjefh6pxy3i"
+            imageUrl
+              ? `https://ipfs.io/ipfs/${imageUrl}`
+              : "https://ipfs.io/ipfs/bafkreihfweuclvhaozl7q6zsjjyrkh262vlbzqyd5m3lijrnjefh6pxy3i"
           }
           alt=""
           className="w-full h-full object-center object-cover"
