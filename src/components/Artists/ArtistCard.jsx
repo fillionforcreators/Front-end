@@ -46,7 +46,9 @@ function ArtistCard({ artist }) {
       <div className="w-full h-[55%] sm:h-[65%]">
         <img
           src={
-            `https://ipfs.io/ipfs/${imageUrl}` ||
+            imageUrl ?
+              `https://ipfs.io/ipfs/${imageUrl}`
+              :
             "https://ipfs.io/ipfs/bafkreihfweuclvhaozl7q6zsjjyrkh262vlbzqyd5m3lijrnjefh6pxy3i"
           }
           alt=""
