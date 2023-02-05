@@ -1,20 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
-// import CollectionItemModal from "../Modals/CollectionItemModal";
-import { useProvider, useSigner, useContract } from "wagmi";
+import CollectionItemModal from "../Modals/CollectionItemModal";
+// import { useProvider, useSigner, useContract } from "wagmi";
 // import { FACTORY_ADDRESS, FACTORY_ABI } from "../../constants/index";
-import { Web3Storage } from "web3.storage/dist/bundle.esm.min.js";
-
+import { pushImgToStorage, putJSONandGetHash } from "../../utils/storage";
 import LoadingModal from "../Modals/LoadingModal";
 import toast from "react-hot-toast";
 
-const apiToken = process.env.REACT_APP_WEB3STORAGE_API_TOKEN;
-
-const client = new Web3Storage({ token: apiToken });
-
 const CreateACollection = () => {
-  const provider = useProvider();
-  const signer = useSigner();
+  // const provider = useProvider();
+  // const signer = useSigner();
   // Set up a contract instance
   // const FactoryContract = useContract({
   //   addressOrName: FACTORY_ADDRESS,
@@ -58,159 +53,157 @@ const CreateACollection = () => {
   };
 
   const createCollection = async () => {
-    setLoading(true);
-    console.log("uploading image");
-    //hashing image
-    const imgHash = await client.put([image], { wrapWithDirectory: false });
+    try {
+      setLoading(true);
+      console.log("uploading image");
+      //hashing image
+      const imgHash = await pushImgToStorage(image);
 
-    // Upload and hashing collection details to web3.storage
-    setCollectionInfo((prev) => ({ ...prev, imgHash: imgHash }));
+      // Upload and hashing collection details to web3.storage
+      setCollectionInfo((prev) => ({ ...prev, imgHash: imgHash }));
 
-    // create a blob of collectionInfo
-    const blob = new Blob([JSON.stringify(collectionInfo)], {
-      type: "application/json",
-    });
+      //uploading collection
+      const collectionHash = await putJSONandGetHash(collectionInfo);
+      console.log("Collection hash: ", collectionHash);
 
-    //and then to a file
-    const file = [new File([blob], "nft.json")];
+      //upload artist to Fillion
+      // const txResponse = await FactoryContract.deployERC1155(
+      //   collectionHash,
+      //   items,
+      //   quantity
+      // );
+      // await txResponse.wait();
 
-    //uploading collection
-    const collectionHash = await client.put(file);
-    console.log("Collection hash: ", collectionHash);
-
-    //upload artist to FileChain
-    // const txResponse = await FactoryContract.deployERC1155(
-    //   collectionHash,
-    //   items,
-    //   quantity
-    // );
-    // await txResponse.wait();
-
-    setCollectionInfo({
-      name: "",
-      link: "",
-      description: "",
-      imgHash: "",
-    });
-    setItems([]);
-    setQuantity([]);
-    setLoading(false);
-    toast.success("Collection Successfully created");
+      setCollectionInfo({name: "",link: "", description: "", imgHash: ""});
+      setItems([]);
+      setQuantity([]);
+      setLoading(false);
+      toast.success("Collection Successfully created");
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      toast.error("Something went wrong");
+    }
   };
   return (
     <>
       {loading && <LoadingModal />}
-      {/* {showForm && (
+      {showForm && (
         <CollectionItemModal
           setShowForm={setShowForm}
           setItems={setItems}
           setQuantity={setQuantity}
           setItemsObject={setItemsObject}
         />
-      )} */}
+      )}
       <div className="text-ld min-h-screen w-full p-4 md:py-20 max-w-7xl mx-auto">
-        <h1 className="text-3xl lg:text-5xl pb-4 text-indigo-700 dark:text-indigo-500 text-center">
+        <h1 className="text-3xl lg:text-5xl tracking-tighter pb-4 text-indigo-700 dark:text-indigo-500 text-center">
           Create a collection
         </h1>
-        <p className="py-2 md:py-4 text-[12px]">
-          <Required />
-          Required fields
-        </p>
 
-        {/* COLLECTION PREVIEW IMAGE */}
-        <div className="py-2">
-          <p className="text-bold py-1">
-            <Required />
-            Choose a Collection Preview Image
-          </p>
-          <p className="text-xs">File types supported: JPG, PNG, GIF, SVG</p>
-          <div className="max-w-[200px] overflow-hidden">
-            <label htmlFor="collection_image" className="w-fit cursor-pointer">
-              <div className="my-4 w-[200px] h-[200px] border border-dashed border-gray-500 flex items-center justify-center">
-                {!image && (
-                  <span className="text-xl text-ld md:text-3xl">+</span>
-                )}
-                {image && (
-                  <img
-                    src={imageUrl}
-                    className="w-full h-full inset-0 z-10 object-center object-cover"
-                    alt=""
-                  />
-                )}
-              </div>
-            </label>
-            <input
-              type="file"
-              id="collection_image"
-              className="hidden"
-              accept="image/*"
-              onChange={handleImageChange}
-            />
-          </div>
-        </div>
-
-        {/* Wrapper */}
-        <div className="space-y-4 w-full md:w-1/2">
-          {/* Collection Name */}
-          <div className="">
-            <label htmlFor="">
+        <div className="mx-auto">
+          {/* COLLECTION PREVIEW IMAGE */}
+          <div className="py-2 w-full md:w-1/2 md:mx-auto">
+            <p className="py-2 md:py-4 text-[12px]">
               <Required />
-              Collection Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              className="w-full form-input mt-2"
-              value={name}
-              onChange={handleCollectionInfoChange}
-            />
-          </div>
-          {/* External Link */}
-          <div className="">
-            <label htmlFor="">External link</label>
-            <p className="text-xs">
-              Fillion will include a link to this URL on this item's detail
-              page, so that users can click to learn more about it. You are
-              welcome to link to your own webpage with more details.
+              Required fields
             </p>
-            <input
-              type="text"
-              id="link"
-              className="w-full form-input mt-2"
-              value={link}
-              onChange={handleCollectionInfoChange}
-            />
-          </div>
-          {/* Description */}
-          <div className="">
-            <label htmlFor="">
+            <p className="text-bold py-1">
               <Required />
-              Description
-            </label>
-            <textarea
-              name=""
-              id="description"
-              cols="30"
-              rows="10"
-              className="w-full form-input mt-2"
-              placeholder="Tell us about this collection"
-              value={description}
-              onChange={handleCollectionInfoChange}
-            ></textarea>
+              Choose a Collection Preview Image
+            </p>
+            <p className="text-xs">File types supported: JPG, PNG, GIF, SVG</p>
+            <div className="max-w-[200px] overflow-hidden">
+              <label
+                htmlFor="collection_image"
+                className="w-fit cursor-pointer"
+              >
+                <div className="my-4 w-[200px] h-[200px] border border-dashed border-gray-500 flex items-center justify-center">
+                  {!image && (
+                    <span className="text-xl text-ld md:text-3xl">+</span>
+                  )}
+                  {image && (
+                    <img
+                      src={imageUrl}
+                      className="w-full h-full inset-0 z-10 object-center object-cover"
+                      alt=""
+                    />
+                  )}
+                </div>
+              </label>
+              <input
+                type="file"
+                id="collection_image"
+                className="hidden"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+            </div>
           </div>
-        </div>
-        {/* Show Form Button */}
-        <div className="mt-8">
-          <h1 className="text-3xl lg:text-4xl pb-4 text-indigo-700 dark:text-indigo-500 text-center mb-6">
-            Add Items to the collection
-          </h1>
-          <div className="flex items-center justify-center mx-auto">
-            <button
-              onClick={() => setShowForm(true)}
-              className="bttn-4 bttn-primary"
-            >
-              Add an Item
-            </button>
+
+          {/* Wrapper */}
+          <div className="space-y-4 w-full md:w-1/2 md:mx-auto">
+            {/* Collection Name */}
+            <div className="">
+              <label htmlFor="">
+                <Required />
+                Collection Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                className="w-full form-input mt-2"
+                value={name}
+                onChange={handleCollectionInfoChange}
+              />
+            </div>
+            {/* External Link */}
+            <div className="">
+              <label htmlFor="">External link</label>
+              <p className="text-xs">
+                Fillion will include a link to this URL on this item's detail
+                page, so that users can click to learn more about it. You are
+                welcome to link to your own webpage with more details.
+              </p>
+              <input
+                type="text"
+                id="link"
+                className="w-full form-input mt-2"
+                value={link}
+                onChange={handleCollectionInfoChange}
+              />
+            </div>
+            {/* Description */}
+            <div className="">
+              <label htmlFor="">
+                <Required />
+                Description
+              </label>
+              <textarea
+                name=""
+                id="description"
+                cols="30"
+                rows="10"
+                className="w-full form-input mt-2"
+                placeholder="Tell us about this collection"
+                value={description}
+                onChange={handleCollectionInfoChange}
+              ></textarea>
+            </div>
+          </div>
+          {/* Show Form Button */}
+          <div className="mt-8 lg:mt-16">
+            <h1 className="text-3xl lg:text-4xl tracking-tighter pb-4 text-indigo-700 dark:text-indigo-500 text-center mb-6">
+              Add Items to the collection
+            </h1>
+            <div className="flex items-center justify-center mx-auto">
+              <button
+                onClick={() => setShowForm(true)}
+                className="bttn-4 bttn-primary"
+              >
+                Add an Item
+              </button>
+            </div>
           </div>
         </div>
 
@@ -268,7 +261,7 @@ const CreateACollection = () => {
                     <td class="py-4 px-6">{item.itemName}</td>
                     <td class="py-4 px-6">{item.description}</td>
                     <td class="py-4 px-6">{item.qty}</td>
-                    <td class="py-4 px-6">{item.price} MATIC</td>
+                    <td class="py-4 px-6">{item.price} FIL</td>
                   </tr>
                 ))}
               </tbody>
