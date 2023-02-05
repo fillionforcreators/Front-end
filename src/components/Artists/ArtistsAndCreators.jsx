@@ -58,7 +58,7 @@ function ArtistsAndCreators() {
           </h1>
           <ul className="grid grid-cols-1 gap-y-4 gap-x-4 lg:gap-x-6 md:grid-cols-2 lg:grid-cols-3 w-[90%] sm:w-[55%] md:w-[80%] mx-auto mt-8 max-w-6xl pb-8">
             {artists.length > 0 &&
-              artists.map((artist, index) => {
+              artists?.map((artist, index) => {
                 return (
                   <li key={index} className="rounded-xl relative text-ld">
                     <ArtistCard artist={artist} />

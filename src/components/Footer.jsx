@@ -21,7 +21,7 @@ function Footer() {
           </div>
           <p className="text-xs md:text-sm">
             Free Decentralized Digital MarketPlace, Zero censorship, fast
-            transactions with cheap fees, on Polygon Network.
+            transactions with cheap fees, on Filecoin Network.
           </p>
         </div>
         {/* Second Grid */}
