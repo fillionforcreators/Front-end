@@ -24,7 +24,6 @@ function ArtistsAndCreators() {
       if (isConnected) {
         setFetchingArtists(true);
         const allArtists = await ArtistContract.getAllArtists();
-        console.log(allArtists);
         setArtists(allArtists);
         setFetchingArtists(false);
       } else {

@@ -41,7 +41,7 @@ const CollectionCard = ({ contract }) => {
         {/* <p>{details.description}</p> */}
         <Link
           to={{
-            pathname: `/artist/${contract}`,
+            pathname: `/artist/collection/${contract}`,
           }}
           // state={{ object }}
           className="bttn bttn-primary text-indigo-500 hover:text-[#ffffff] trans "

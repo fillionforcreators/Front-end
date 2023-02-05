@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { getJSONFromCID } from '../../utils/storage'
 
 function ArtistCard({ artist }) {
-  const [name, setName] = useState("Loading...");
-  const [bio, setBio] = useState("Loading...");
+  const [name, setName] = useState(null);
+  const [bio, setBio] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   let { artistAddress, artistDetails, dateJoined, id } = artist;
   //convert id from hex to int
@@ -30,7 +30,7 @@ function ArtistCard({ artist }) {
     };
 
     fetchData(); 
-  }, [artistDetails]);
+  }, []);
 
     const object = {
       artistAddress,
@@ -41,6 +41,7 @@ function ArtistCard({ artist }) {
       bio,
     };
 
+  if(name && bio && imageUrl) {
   return (
     <div className=" dark:bg-inherit flex flex-col gap-2 relative w-full h-[300px] sm:h-[380px] rounded-lg overflow-hidden trans shadow-md cursor-pointer border-2 border-transparent dark:border-slate-700">
       <div className="w-full h-[55%] sm:h-[65%]">
@@ -72,6 +73,7 @@ function ArtistCard({ artist }) {
       </div>
     </div>
   );
+  }
 }
 
 export default ArtistCard;
