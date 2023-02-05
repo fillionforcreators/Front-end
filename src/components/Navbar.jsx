@@ -189,7 +189,7 @@ export default function Navbar() {
                   <img
                     className="h-8 w-auto"
                     src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                    alt="FileChain"
+                    alt="Fillion"
                   />
                 </div>
                 <div className="-mr-2">
