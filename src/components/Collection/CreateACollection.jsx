@@ -66,10 +66,19 @@ const CreateACollection = () => {
       const collectionHash = await putJSONandGetHash(collectionInfo);
       console.log("Collection hash: ", collectionHash);
 
+      const ids = [];
+      //get length of items and fill id array from 1 to length
+      let len = items.length;
+      for (let i = 1; i <= len; i++){
+        ids.push(i);
+      }
+      console.log(ids);
+
       // upload artist to Fillion
       const txResponse = await FactoryContract.deployERC1155(
         collectionHash,
         items,
+        ids,
         quantity
       );
       await txResponse.wait();
