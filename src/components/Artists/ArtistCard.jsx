@@ -20,9 +20,9 @@ function ArtistCard({ artist }) {
   const fetchData = async () => {
     //fetch artist's name, bio, and profile picture from IPFS using artistDetails as the hash
     try {
-      console.log('hello')
+      console.log('getting json from the cid')
       let res = await getJSONFromCID(artistDetails);
-      console.log('hi')
+      console.log('json gotten from the cid')
       console.log(res);
       setName(res?.name);
       setBio(res?.bio);
@@ -33,7 +33,7 @@ function ArtistCard({ artist }) {
   };
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, []);
 
   const object = {
     artistAddress,
