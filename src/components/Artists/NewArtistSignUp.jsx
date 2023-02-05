@@ -36,7 +36,7 @@ function NewArtist() {
     if (!image) return toast.error("Please upload an image");
     if (!name) return toast.error("Please enter a name");
     if (!bio) return toast.error("Please enter a bio");
-    if (bio.length > 100) return toast.error("Bio too long");
+    if (bio.length > 400) return toast.error("Bio too long");
     if (name.length > 30) return toast.error("Name too long");
 
     if (image && name.length >= 1 && bio.length >= 5) {
