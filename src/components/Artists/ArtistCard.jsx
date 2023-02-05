@@ -24,9 +24,9 @@ function ArtistCard({ artist }) {
       //fetch artist's name, bio, and profile picture from IPFS using artistDetails as the hash
       let res = await getJSONFromCID(artistDetails);
       console.log(res);
-      setName(res.name);
-      setBio(res.bio);
-      setImageUrl(res.imgHash);
+      setName(res?.name);
+      setBio(res?.bio);
+      setImageUrl(res?.imgHash);
     };
 
     fetchData(); 
@@ -41,7 +41,6 @@ function ArtistCard({ artist }) {
       bio,
     };
 
-  if(name && bio && imageUrl) {
   return (
     <div className=" dark:bg-inherit flex flex-col gap-2 relative w-full h-[300px] sm:h-[380px] rounded-lg overflow-hidden trans shadow-md cursor-pointer border-2 border-transparent dark:border-slate-700">
       <div className="w-full h-[55%] sm:h-[65%]">
@@ -73,7 +72,6 @@ function ArtistCard({ artist }) {
       </div>
     </div>
   );
-  }
 }
 
 export default ArtistCard;
