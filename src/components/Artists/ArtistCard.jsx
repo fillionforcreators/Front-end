@@ -17,14 +17,7 @@ function ArtistCard({ artist }) {
   dateJoined = new Date(dateJoined * 1000);
   dateJoined = dateJoined.toLocaleDateString();
 
-  const object = {
-    artistAddress,
-    dateJoined,
-    idInt,
-    name,
-    imageUrl,
-    bio,
-  };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,6 +31,15 @@ function ArtistCard({ artist }) {
 
     fetchData(); 
   }, [artistDetails]);
+
+    const object = {
+      artistAddress,
+      dateJoined,
+      idInt,
+      name,
+      imageUrl,
+      bio,
+    };
 
   return (
     <div className=" dark:bg-inherit flex flex-col gap-2 relative w-full h-[300px] sm:h-[380px] rounded-lg overflow-hidden trans shadow-md cursor-pointer border-2 border-transparent dark:border-slate-700">
