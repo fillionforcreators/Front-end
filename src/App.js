@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Home, Footer, SignUp, LaunchPad, ArtistsAndCreators, CreateACollection } from "./components";
+import { Navbar, Home, Footer, SignUp, LaunchPad, ArtistsAndCreators, ArtistPage, CreateACollection } from "./components";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -15,11 +15,8 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/signup" element={<SignUp />} />
           <Route exact path="/launchpad" element={<LaunchPad />} />
-          <Route
-            exact
-            path="/artists_creators"
-            element={<ArtistsAndCreators />}
-          />
+          <Route exact path="/artists_creators" element={<ArtistsAndCreators />} />
+          <Route exact path="/artist/:address" element={<ArtistPage />} />
           <Route
             exact
             path="/collection/create"

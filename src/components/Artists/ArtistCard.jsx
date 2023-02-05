@@ -5,9 +5,7 @@ import { getJSONFromCID } from '../../utils/storage'
 function ArtistCard({ artist }) {
   const [name, setName] = useState("Loading...");
   const [bio, setBio] = useState("Loading...");
-  const [imageUrl, setImageUrl] = useState(
-    "https://ipfs.io/ipfs/bafkreihfweuclvhaozl7q6zsjjyrkh262vlbzqyd5m3lijrnjefh6pxy3i"
-  );
+  const [imageUrl, setImageUrl] = useState(null);
   let { artistAddress, artistDetails, dateJoined, id } = artist;
   //convert id from hex to int
   let idHex = id.toHexString();
@@ -32,6 +30,7 @@ function ArtistCard({ artist }) {
     const fetchData = async () => {
       //fetch artist's name, bio, and profile picture from IPFS using artistDetails as the hash
       let res = await getJSONFromCID(artistDetails);
+      console.log(res);
       setName(res.name);
       setBio(res.bio);
       setImageUrl(res.imgHash);
@@ -44,7 +43,10 @@ function ArtistCard({ artist }) {
     <div className=" dark:bg-inherit flex flex-col gap-2 relative w-full h-[300px] sm:h-[380px] rounded-lg overflow-hidden trans shadow-md cursor-pointer border-2 border-transparent dark:border-slate-700">
       <div className="w-full h-[55%] sm:h-[65%]">
         <img
-          src={`https://ipfs.io/ipfs/${imageUrl}`}
+          src={
+            `https://ipfs.io/ipfs/${imageUrl}` ||
+            "https://ipfs.io/ipfs/bafkreihfweuclvhaozl7q6zsjjyrkh262vlbzqyd5m3lijrnjefh6pxy3i"
+          }
           alt=""
           className="w-full h-full object-center object-cover"
           loading="lazy"
