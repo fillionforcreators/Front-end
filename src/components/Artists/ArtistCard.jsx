@@ -33,7 +33,7 @@ function ArtistCard({ artist }) {
   };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   const object = {
     artistAddress,
