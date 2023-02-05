@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { getJSONFromCID } from '../../utils/storage'
 
 function ArtistCard({ artist }) {
-  const [name, setName] = useState("");
-  const [bio, setBio] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [name, setName] = useState("Loading...");
+  const [bio, setBio] = useState("Loading...");
+  const [imageUrl, setImageUrl] = useState(
+    "https://ipfs.io/ipfs/bafkreihfweuclvhaozl7q6zsjjyrkh262vlbzqyd5m3lijrnjefh6pxy3i"
+  );
   let { artistAddress, artistDetails, dateJoined, id } = artist;
   //convert id from hex to int
   let idHex = id.toHexString();

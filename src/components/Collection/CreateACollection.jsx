@@ -1,21 +1,21 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
 import CollectionItemModal from "../Modals/CollectionItemModal";
-// import { useProvider, useSigner, useContract } from "wagmi";
-// import { FACTORY_ADDRESS, FACTORY_ABI } from "../../constants/index";
+import { useProvider, useSigner, useContract } from "wagmi";
+import { FACTORY_ADDRESS, FACTORY_ABI } from "../../constants/index";
 import { pushImgToStorage, putJSONandGetHash } from "../../utils/storage";
 import LoadingModal from "../Modals/LoadingModal";
 import toast from "react-hot-toast";
 
 const CreateACollection = () => {
-  // const provider = useProvider();
-  // const signer = useSigner();
+  const provider = useProvider();
+  const signer = useSigner();
   // Set up a contract instance
-  // const FactoryContract = useContract({
-  //   addressOrName: FACTORY_ADDRESS,
-  //   contractInterface: FACTORY_ABI,
-  //   signerOrProvider: signer.data || provider,
-  // });
+  const FactoryContract = useContract({
+    addressOrName: FACTORY_ADDRESS,
+    contractInterface: FACTORY_ABI,
+    signerOrProvider: signer.data || provider,
+  });
 
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
@@ -66,13 +66,13 @@ const CreateACollection = () => {
       const collectionHash = await putJSONandGetHash(collectionInfo);
       console.log("Collection hash: ", collectionHash);
 
-      //upload artist to Fillion
-      // const txResponse = await FactoryContract.deployERC1155(
-      //   collectionHash,
-      //   items,
-      //   quantity
-      // );
-      // await txResponse.wait();
+      // upload artist to Fillion
+      const txResponse = await FactoryContract.deployERC1155(
+        collectionHash,
+        items,
+        quantity
+      );
+      await txResponse.wait();
 
       setCollectionInfo({name: "",link: "", description: "", imgHash: ""});
       setItems([]);
