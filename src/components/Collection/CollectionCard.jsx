@@ -23,7 +23,8 @@ const CollectionCard = ({ contract }) => {
       console.log(_details);
       const data = await fetch(
             `https://ipfs.io/ipfs/${details}/file.json`
-          ).then((res) => res.json());
+      ).then((res) => res.json());
+      console.log(data);
       setDetails(data);
     };
     fetchDetails();
