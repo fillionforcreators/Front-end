@@ -29,11 +29,11 @@ function ArtistPage() {
       try{
       if (isConnected) {
         const works = await FactoryContract.AllArtistContracts(artistAddress);
-        console.log(works);
         setArtistContracts(works);
       }
       } catch (err) {
         console.log(err);
+        setArtistContracts([]);
       }
     };
     allContracts();

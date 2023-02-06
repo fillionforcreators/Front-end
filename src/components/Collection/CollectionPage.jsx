@@ -12,7 +12,6 @@ function CollectionPage() {
   const { state } = useLocation();
   const { isConnected } = useAccount();
   const { contractAddress, name, imageUrl, description, link } = state.object;
-  console.log(state.object);
   const [tokenURIs, setTokenURIs] = useState([]);
   //Contract instance
   const provider = useProvider();
