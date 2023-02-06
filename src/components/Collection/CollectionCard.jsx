@@ -30,9 +30,7 @@ const CollectionCard = ({ contract }) => {
     contractAddress: contract,
     name: details.name,
     imageUrl: details.imgHash
-      ? details.imgHash.length > 0
-        ? `https://ipfs.io/ipfs/${details.imgHash}`
-        : "https://ipfs.io/ipfs/bafkreihfweuclvhaozl7q6zsjjyrkh262vlbzqyd5m3lijrnjefh6pxy3i"
+      ? `https://ipfs.io/ipfs/${details.imgHash}`
       : "https://ipfs.io/ipfs/bafkreihfweuclvhaozl7q6zsjjyrkh262vlbzqyd5m3lijrnjefh6pxy3i",
     description: details.description,
     link: details.link ?? "www.google.com",

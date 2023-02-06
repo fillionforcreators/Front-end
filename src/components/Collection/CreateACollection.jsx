@@ -58,42 +58,38 @@ const CreateACollection = () => {
       setLoading(true);
       console.log("uploading image");
       //hashing image
-      const imgHashipfs = await pushImgToStorage(image);
-      console.log("Image hash: ", imgHashipfs);
-      console.log('Done hashing image')
-
-      // Upload and hashing collection details to web3.storage
-      setCollectionInfo((prev) => ({ ...prev, imgHash: imgHashipfs }));
-      console.log(collectionInfo);
-
-      //uploading collection
+      const imgHashipfs = await pushImgToStorage(image).then(async (res) => {
+        console.log("Image hash: ", res);
+        //add image hash to collectionInfo
+        setCollectionInfo((prev) => ({ ...prev, imgHash: res}));
+        console.log(imgHashipfs, collectionInfo);
+    
+      // uploading collection
       const collectionHash = await putJSONandGetHash(collectionInfo);
       console.log("Collection hash: ", collectionHash);
 
-      // const ids = [];
-      // //get length of items and fill id array from 1 to length
-      // let len = items.length;
-      // for (let i = 1; i <= len; i++) {
-      //   ids.push(i);
-      // }
-      // console.log(ids);
+      const ids = [];
+      for (let i = 1; i <= items.length; i++) {
+        ids.push(i);
+      }
 
-      // // upload artist to Fillion
-      // const txResponse = await FactoryContract.deployERC1155(
-      //   collectionHash,
-      //   items,
-      //   ids,
-      //   quantity
-      // );
-      // const txReceipt = await txResponse.wait();
-      // console.log(txReceipt.events[0].address);
-      // setCollectionAddress(txReceipt.events[0].address);
-      // setShowMintAll(true);
+      // upload artist to Fillion
+      const txResponse = await FactoryContract.deployERC1155(
+        collectionHash,
+        items,
+        ids,
+        quantity
+      );
+      const txReceipt = await txResponse.wait();
+      console.log(txReceipt.events[0].address);
+      setCollectionAddress(txReceipt.events[0].address);
+      setShowMintAll(true);
 
-      // setCollectionInfo({ name: "", link: "", description: "", imgHash: "" });
-      // setItems([]);
-      // setQuantity([]);
-      // setLoading(false);
+      setCollectionInfo({ name: "", link: "", description: "", imgHash: "" });
+      setItems([]);
+      setQuantity([]);
+        setLoading(false);
+        });
     } catch (err) {
       console.log(err);
       setLoading(false);
