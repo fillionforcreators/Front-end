@@ -288,7 +288,7 @@ const CreateACollection = () => {
           </div>
         ) : null}
 
-        {items.length === 0 ? (
+        {items.length > 0 ? (
           <div className="flex items-center justify-center mx-auto">
             <button className="bttn-4 bttn-primary" onClick={createCollection}>
               Create Collection
