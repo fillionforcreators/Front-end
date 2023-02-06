@@ -41,8 +41,8 @@ const CollectionCard = ({ contract }) => {
   };
 
   return (
-    <figure className="relative bg-gray-300 dark:bg-gray-600 w-full h-[450px] flex flex-col items-center flex-wrap overflow-hidden rounded-md">
-      <div className="h-[60%] w-full">
+    <figure className="relative bg-gray-200 dark:bg-gray-600 w-full h-[450px] flex flex-col items-center flex-wrap overflow-hidden rounded-md">
+      <div className="h-[70%] w-full">
         <img
           src="https://ipfs.io/ipfs/bafkreihfweuclvhaozl7q6zsjjyrkh262vlbzqyd5m3lijrnjefh6pxy3i"
           alt="collection"
@@ -50,7 +50,7 @@ const CollectionCard = ({ contract }) => {
         />
       </div>
       <div className=" w-full p-4">
-        <p className="text-xl my-6">{details.name}</p>
+        <p className="text-xl text-center my-2">{details.name || 'Azuks'}</p>
         {/* <p>{details.description}</p> */}
         <Link
           to={{
