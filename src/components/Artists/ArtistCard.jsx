@@ -17,23 +17,21 @@ function ArtistCard({ artist }) {
   dateJoined = new Date(dateJoined * 1000);
   dateJoined = dateJoined.toLocaleDateString();
 
-  const fetchData = async () => {
-    //fetch artist's name, bio, and profile picture from IPFS using artistDetails as the hash
-    try {
-      console.log('getting json from the cid')
-      let res = await getJSONFromCID(artistDetails);
-      console.log('json gotten from the cid')
-      console.log(res);
-      setName(res?.name);
-      setBio(res?.bio);
-      setImageUrl(res?.imgHash);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+
   useEffect(() => {
+    const fetchData = async () => {
+      //fetch artist's name, bio, and profile picture from IPFS using artistDetails as the hash
+      try {
+        let res = await getJSONFromCID(artistDetails);
+        setName(res?.name);
+        setBio(res?.bio);
+        setImageUrl(res?.imgHash);
+      } catch (e) {
+        console.log(e);
+      }
+    };
     fetchData();
-  }, []);
+  }, [artistDetails]);
 
   const object = {
     artistAddress,

@@ -6,6 +6,7 @@ import { FACTORY_ADDRESS, FACTORY_ABI } from "../../constants/index";
 import { pushImgToStorage, putJSONandGetHash } from "../../utils/storage";
 import LoadingModal from "../Modals/LoadingModal";
 import toast from "react-hot-toast";
+import MintAllModal from "../Modals/MintAllModal";
 
 const CreateACollection = () => {
   const provider = useProvider();
@@ -19,10 +20,10 @@ const CreateACollection = () => {
 
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
-
+  const [collectionAddress, setCollectionAddress] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [showMintAll, setShowMintAll] = useState(false);
   const [collectionInfo, setCollectionInfo] = useState({
     name: "",
     link: "",
@@ -69,7 +70,7 @@ const CreateACollection = () => {
       const ids = [];
       //get length of items and fill id array from 1 to length
       let len = items.length;
-      for (let i = 1; i <= len; i++){
+      for (let i = 1; i <= len; i++) {
         ids.push(i);
       }
       console.log(ids);
@@ -81,22 +82,28 @@ const CreateACollection = () => {
         ids,
         quantity
       );
-      await txResponse.wait();
+      const txReceipt = await txResponse.wait();
+      console.log(txReceipt.events[0].address);
+      setCollectionAddress(txReceipt.events[0].address);
+      setShowMintAll(true);
 
-      setCollectionInfo({name: "",link: "", description: "", imgHash: ""});
+      setCollectionInfo({ name: "", link: "", description: "", imgHash: "" });
       setItems([]);
       setQuantity([]);
       setLoading(false);
-      toast.success("Collection Successfully created");
     } catch (err) {
       console.log(err);
       setLoading(false);
       toast.error("Something went wrong");
     }
   };
+
   return (
     <>
       {loading && <LoadingModal />}
+      {collectionAddress && showMintAll && (
+        <MintAllModal collectionAddress={collectionAddress} />
+      )}
       {showForm && (
         <CollectionItemModal
           setShowForm={setShowForm}
@@ -219,29 +226,29 @@ const CreateACollection = () => {
         {/* Table of Collection Items */}
 
         {itemsObject.length > 0 ? ( // If there are items in the array of itemsObject
-          <div class="overflow-x-auto relative shadow-md sm:rounded-lg my-8">
-            <div className="text-left w-full text-3xl text-semibold text-indigo-700 dark:text-indigo-500 my-4">
+          <div className="overflow-x-auto relative shadow-md sm:rounded-lg my-8">
+            <div classNameName="text-left w-full text-3xl text-semibold text-indigo-700 dark:text-indigo-500 my-4">
               COLLECTION ITEMS
             </div>
-            <table class="w-full table-auto text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <table className="w-full table-auto text-sm text-left text-gray-500 dark:text-gray-400">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                  <th scope="col" class="py-3 px-6">
+                  <th scope="col" className="py-3 px-6">
                     #
                   </th>
-                  <th scope="col" class="py-3 px-6">
+                  <th scope="col" className="py-3 px-6">
                     Cover Image
                   </th>
-                  <th scope="col" class="py-3 px-6">
+                  <th scope="col" className="py-3 px-6">
                     Name
                   </th>
-                  <th scope="col" class="py-3 px-6">
+                  <th scope="col" className="py-3 px-6">
                     Description
                   </th>
-                  <th scope="col" class="py-3 px-6">
+                  <th scope="col" className="py-3 px-6">
                     Quantity
                   </th>
-                  <th scope="col" class="py-3 px-6">
+                  <th scope="col" className="py-3 px-6">
                     Price
                   </th>
                 </tr>
@@ -249,16 +256,16 @@ const CreateACollection = () => {
               <tbody>
                 {itemsObject.map((item, index) => (
                   <tr
-                    class="bg-white border-b  dark:bg-gray-900 dark:border-gray-700"
+                    className="bg-white border-b  dark:bg-gray-900 dark:border-gray-700"
                     key={index}
                   >
                     <th
                       scope="row"
-                      class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
                       {index + 1}
                     </th>
-                    <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                       <div className=" w-14 square aspect-square rounded-full border-[3px] border-indigo-600 overflow-hidden">
                         <img
                           src={item.imageUrl}
@@ -267,10 +274,10 @@ const CreateACollection = () => {
                         />
                       </div>
                     </td>
-                    <td class="py-4 px-6">{item.itemName}</td>
-                    <td class="py-4 px-6">{item.description}</td>
-                    <td class="py-4 px-6">{item.qty}</td>
-                    <td class="py-4 px-6">{item.price} FIL</td>
+                    <td className="py-4 px-6">{item.itemName}</td>
+                    <td className="py-4 px-6">{item.description}</td>
+                    <td className="py-4 px-6">{item.qty}</td>
+                    <td className="py-4 px-6">{item.price} FIL</td>
                   </tr>
                 ))}
               </tbody>
@@ -278,13 +285,13 @@ const CreateACollection = () => {
           </div>
         ) : null}
 
-        {items.length > 0 ? (
-          <div className="flex items-center justify-center mx-auto">
-            <button className="bttn-4 bttn-primary" onClick={createCollection}>
-              Create Collection
-            </button>
-          </div>
-        ) : null}
+        {/* {items.length > 0 ? ( */}
+        <div className="flex items-center justify-center mx-auto">
+          <button className="bttn-4 bttn-primary" onClick={createCollection}>
+            Create Collection
+          </button>
+        </div>
+        {/* ) : null} */}
       </div>
     </>
   );

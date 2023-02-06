@@ -6,14 +6,13 @@ import { BsTwitter } from "react-icons/bs";
 import { useLocation } from "react-router-dom";
 import { useProvider, useAccount, useSigner, useContract } from "wagmi";
 import { FACTORY_ADDRESS, FACTORY_ABI } from "../../constants/index";
-// import CollectionCard from "../Collection/CollectionCard";
+import CollectionCard from "../Collection/CollectionCard";
 
 function ArtistPage() {
   const { state } = useLocation();
   const { isConnected } = useAccount();
   const { artistAddress, name, imageUrl, bio } = state.object;
   const [artistContracts, setArtistContracts] = useState([]);
-console.log('location state', state.object)
   //Factory Instance
   const provider = useProvider();
   const signer = useSigner();
@@ -27,6 +26,7 @@ console.log('location state', state.object)
     const allContracts = async () => {
       if (isConnected) {
         const works = await FactoryContract.AllArtistContracts(artistAddress);
+        console.log(works);
         setArtistContracts(works);
       }
     };
@@ -66,11 +66,11 @@ console.log('location state', state.object)
         {artistContracts.length > 0 && <>
         <div className="my-32 w-full">
             <ul className="w-[80%] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {/* {artistContracts.map((contract, index) => (
+                {artistContracts.map((contract, index) => (
                     <li key={index}>
                         <CollectionCard contract={contract} />
                     </li>
-                ))} */}
+                ))}
             </ul>
         </div>
 
