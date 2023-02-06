@@ -259,7 +259,7 @@ export const ARTIST_ABI = [
   },
 ];
 
-export const FACTORY_ADDRESS = "0x54542693Fd14d8b42101697CD5560fBcF2a58561";
+export const FACTORY_ADDRESS = "0x6B2E3f14bb79785261e4e6701b21E0b9205940b2";
 
 export const FACTORY_ABI = [
   {
@@ -357,6 +357,34 @@ export const FACTORY_ABI = [
   {
     inputs: [
       {
+        internalType: "address",
+        name: "_collection",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "price",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "quantity",
+        type: "uint256",
+      },
+    ],
+    name: "buyToken",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "string",
         name: "_contractHash",
         type: "string",
@@ -444,6 +472,11 @@ export const COLLECTION_ABI = [
         name: "owner",
         type: "address",
       },
+      {
+        internalType: "address",
+        name: "_marketPlace",
+        type: "address",
+      },
     ],
     stateMutability: "nonpayable",
     type: "constructor",
@@ -456,6 +489,11 @@ export const COLLECTION_ABI = [
   {
     inputs: [],
     name: "NonExistentToken",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "OnlyMarketPlace",
     type: "error",
   },
   {
@@ -948,6 +986,29 @@ export const COLLECTION_ABI = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "_id",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
+    ],
+    name: "transferFromOwner",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {

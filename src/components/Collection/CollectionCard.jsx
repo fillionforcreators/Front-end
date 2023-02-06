@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useProvider, useSigner, useContract } from "wagmi";
 import { COLLECTION_ABI } from "../../constants/index";
-// import { getJSONFromFileinCID } from "../../utils/storage";
+import { getJSONFromFileinCID } from "../../utils/storage";
 
 const CollectionCard = ({ contract }) => {
   // eslint-disable-next-line
@@ -20,11 +20,7 @@ const CollectionCard = ({ contract }) => {
   useEffect(() => {
     const fetchDetails = async () => {
       const _details = await ERC1155Contract.contractHash();
-      console.log(_details);
-      const data = await fetch(
-            `https://ipfs.io/ipfs/${details}/file.json`
-      ).then((res) => res.json());
-      console.log(data);
+      const data = await getJSONFromFileinCID(_details);
       setDetails(data);
     };
     fetchDetails();
@@ -50,7 +46,7 @@ const CollectionCard = ({ contract }) => {
         />
       </div>
       <div className=" w-full p-4">
-        <p className="text-xl text-center my-2">{details.name || 'Azuks'}</p>
+        <p className="text-xl text-center my-2">{details.name}</p>
         {/* <p>{details.description}</p> */}
         <Link
           to={{

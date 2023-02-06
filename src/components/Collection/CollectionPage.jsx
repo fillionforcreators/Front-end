@@ -24,14 +24,20 @@ function CollectionPage() {
   });
   useEffect(() => {
     const allContracts = async () => {
-      if (isConnected) {
-        const tokens = await CollectionContract.allTokenURIs();
-        console.log(tokens);
-        setTokenURIs(tokens);
+        if (isConnected) {
+            try {
+                let tokensTot = await CollectionContract.getTotalChildren();
+                let toks = [];
+                for (let i = 1; i <= tokensTot; i++) toks.push(i);
+                setTokenURIs(toks);
+            } catch (err) {
+                console.log(err);
+                setTokenURIs([]);
+            }
       }
     };
     allContracts();
-  }, [isConnected, CollectionContract, contractAddress]);
+  }, [isConnected, CollectionContract]);
 
   return (
     <div className="min-h-screen w-full flex flex-col text-ld font-pop">
@@ -65,9 +71,9 @@ function CollectionPage() {
         <>
           <div className="my-32 w-full">
             <ul className="w-[80%] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {tokenURIs.map((nft, index) => (
+              {tokenURIs.map((uri, index) => (
                 <li key={index}>
-                  <NFTCard nft={nft} />
+                      <NFTCard uri={uri} contractAddress={contractAddress} />
                 </li>
               ))}
             </ul>
