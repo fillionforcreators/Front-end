@@ -8,6 +8,8 @@ import { useProvider, useAccount, useSigner, useContract } from "wagmi";
 import { FACTORY_ADDRESS, FACTORY_ABI } from "../../constants/index";
 import CollectionCard from "../Collection/CollectionCard";
 
+
+
 function ArtistPage() {
   const { state } = useLocation();
   const { isConnected } = useAccount();
@@ -24,16 +26,21 @@ function ArtistPage() {
   });
   useEffect(() => {
     const allContracts = async () => {
+      try{
       if (isConnected) {
         const works = await FactoryContract.AllArtistContracts(artistAddress);
         console.log(works);
         setArtistContracts(works);
+      }
+      } catch (err) {
+        console.log(err);
       }
     };
     allContracts();
   }, [isConnected, FactoryContract, artistAddress]);
 
   return (
+    <>
     <div className="min-h-screen w-full flex flex-col text-ld font-pop">
       <div className="relative w-[200px] h-[200px] mx-auto mt-12 bg-transparent rounded-full overflow-hidden">
         <img
@@ -63,23 +70,29 @@ function ArtistPage() {
       </div>
 
       {/* Collection Cards if any */}
-        {artistContracts.length > 0 && <>
-        <div className="my-32 w-full">
+      {artistContracts.length > 0 && (
+        <>
+          <div className="my-32 w-full">
             <ul className="w-[80%] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {artistContracts.map((contract, index) => (
-                    <li key={index}>
-                        <CollectionCard contract={contract} />
-                    </li>
-                ))}
+              {artistContracts.map((contract, index) => (
+                <li key={index}>
+                  <CollectionCard contract={contract} />
+                </li>
+              ))}
             </ul>
-        </div>
-
-      </>}
+          </div>
+        </>
+      )}
       {/* If no collections */}
-      {artistContracts.length === 0 && <>
-        <h1>No collections yet</h1>
-      </>}
-    </div>
+      {artistContracts.length === 0 && (
+        <>
+          <div className="w-full max-w-5xl mx-auto flex items-center justify-center mt-8">
+            <h1 className="text-xl text-ld">No collections yet</h1>
+          </div>
+        </>
+      )}
+      </div>
+    </>
   );
 }
 

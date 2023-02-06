@@ -25,7 +25,6 @@ function ArtistCard({ artist }) {
           let res = await fetch(
             `https://ipfs.io/ipfs/${artistDetails}/file.json`
           ).then((res) => res.json());
-        console.log(res);
         setName(res?.name);
         setBio(res?.bio);
         setImageUrl(res?.imgHash);

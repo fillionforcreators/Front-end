@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import { useState, useEffect } from "react";
 import { MdVerified } from "react-icons/md";
-import { BiGlobe} from "react-icons/bi";
+import { BiGlobe } from "react-icons/bi";
 import { BsTwitter } from "react-icons/bs";
 import { useLocation } from "react-router-dom";
 import { useProvider, useAccount, useSigner, useContract } from "wagmi";
@@ -12,6 +12,7 @@ function CollectionPage() {
   const { state } = useLocation();
   const { isConnected } = useAccount();
   const { contractAddress, name, imageUrl, description, link } = state.object;
+  console.log(state.object);
   const [tokenURIs, setTokenURIs] = useState([]);
   //Contract instance
   const provider = useProvider();
@@ -37,7 +38,7 @@ function CollectionPage() {
     <div className="min-h-screen w-full flex flex-col text-ld font-pop">
       <div className="relative w-[200px] h-[200px] mx-auto mt-12 bg-transparent rounded-full overflow-hidden">
         <img
-          src={`https://ipfs.io/ipfs/${imageUrl}`}
+          src={imageUrl}
           alt=""
           className="w-full h-full object-center object-cover absolute"
         />

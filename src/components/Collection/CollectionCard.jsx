@@ -21,7 +21,6 @@ const CollectionCard = ({ contract }) => {
     const fetchDetails = async () => {
       const _details = await ERC1155Contract.contractHash();
       const data = await getJSONFromFileinCID(_details);
-      console.log(data);
       setDetails(data);
     };
     fetchDetails();
@@ -32,7 +31,7 @@ const CollectionCard = ({ contract }) => {
     name: details.name,
     imageUrl: details.imgHash
       ? details.imgHash.length > 0
-        ? details.imgHash
+        ? `https://ipfs.io/ipfs/${details.imgHash}`
         : "https://ipfs.io/ipfs/bafkreihfweuclvhaozl7q6zsjjyrkh262vlbzqyd5m3lijrnjefh6pxy3i"
       : "https://ipfs.io/ipfs/bafkreihfweuclvhaozl7q6zsjjyrkh262vlbzqyd5m3lijrnjefh6pxy3i",
     description: details.description,
