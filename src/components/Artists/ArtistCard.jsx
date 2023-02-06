@@ -22,7 +22,10 @@ function ArtistCard({ artist }) {
     const fetchData = async () => {
       //fetch artist's name, bio, and profile picture from IPFS using artistDetails as the hash
       try {
-        let res = await getJSONFromCID(artistDetails);
+          let res = await fetch(
+            `https://ipfs.io/ipfs/${artistDetails}/file.json`
+          ).then((res) => res.json());
+        console.log(res);
         setName(res?.name);
         setBio(res?.bio);
         setImageUrl(res?.imgHash);

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useProvider, useSigner, useContract } from "wagmi";
-import {  COLLECTION_ABI } from "../../constants/index";
+import { COLLECTION_ABI } from "../../constants/index";
 import { getJSONFromFileinCID } from "../../utils/storage";
 
 const CollectionCard = ({ contract }) => {
@@ -13,7 +13,7 @@ const CollectionCard = ({ contract }) => {
   // Set up a contract instance
   const ERC1155Contract = useContract({
     addressOrName: contract,
-    contractInterface:  COLLECTION_ABI,
+    contractInterface: COLLECTION_ABI,
     signerOrProvider: signer.data || provider,
   });
 
@@ -26,6 +26,18 @@ const CollectionCard = ({ contract }) => {
     };
     fetchDetails();
   }, [ERC1155Contract]);
+
+  const object = {
+    contractAddress: contract,
+    name: details.name,
+    imageUrl: details.imgHash
+      ? details.imgHash.length > 0
+        ? details.imgHash
+        : "https://ipfs.io/ipfs/bafkreihfweuclvhaozl7q6zsjjyrkh262vlbzqyd5m3lijrnjefh6pxy3i"
+      : "https://ipfs.io/ipfs/bafkreihfweuclvhaozl7q6zsjjyrkh262vlbzqyd5m3lijrnjefh6pxy3i",
+    description: details.description,
+    link: details.link ?? "www.google.com",
+  };
 
   return (
     <figure className="relative bg-gray-300 dark:bg-gray-600 w-full h-[450px] flex flex-col items-center flex-wrap overflow-hidden rounded-md">
@@ -43,7 +55,7 @@ const CollectionCard = ({ contract }) => {
           to={{
             pathname: `/artist/collection/${contract}`,
           }}
-          // state={{ object }}
+          state={{ object }}
           className="bttn bttn-primary text-indigo-500 hover:text-[#ffffff] trans "
         >
           View Collection
