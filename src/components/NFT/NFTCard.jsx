@@ -34,7 +34,7 @@ const NFTCard = ({ uri, contractAddress }) => {
         console.log(res);
         setItemsName(res.itemName);
         setItemsDescription(res.description);
-        setItemsImage(res.imageHash);
+        setItemsImage(res.imgHash);
         setItemsPrice(res.price);
       } catch (err) {
         console.log(err);
@@ -50,7 +50,7 @@ const NFTCard = ({ uri, contractAddress }) => {
         <img
           src={
             itemsImage
-              ? itemsImage
+              ? `https://ipfs.io/ipfs/${itemsImage}`
               : "https://ipfs.io/ipfs/bafkreihfweuclvhaozl7q6zsjjyrkh262vlbzqyd5m3lijrnjefh6pxy3i"
           }
           alt="collection"
